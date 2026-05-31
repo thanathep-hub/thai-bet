@@ -164,7 +164,7 @@
           </button>
           <div class="min-w-0">
             <p class="text-xs truncate" id="crumb" style="color:var(--muted)"></p>
-            <h1 class="text-2xl font-bold truncate" id="title">หวย</h1>
+            <h1 class="text-2xl font-bold truncate" id="title">จัดการหวย</h1>
           </div>
         </div>
         <div class="flex items-center gap-1.5">
@@ -209,21 +209,21 @@
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M4 4h16v4H4zM4 12h16v8H4z"/></svg>
             </div>
             <div class="flex-1 min-w-0"><p class="font-semibold">หวยรัฐบาล</p><p class="text-xs" style="color:var(--muted)">งวดล่าสุด 16 มิ.ย. · เปิดรับอยู่</p></div>
-            <span class="badge-open text-xs px-2.5 py-1 font-semibold">เปิด</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--muted);flex-shrink:0"><path d="m9 18 6-6-6-6"/></svg>
           </button>
           <button onclick="openLottery('หวยลาว')" class="card p-4 w-full text-left flex items-center gap-3 active:scale-[.99] transition-transform">
             <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style="background:var(--surface-2)">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M4 4h16v4H4zM4 12h16v8H4z"/></svg>
             </div>
             <div class="flex-1 min-w-0"><p class="font-semibold">หวยลาว</p><p class="text-xs" style="color:var(--muted)">งวดล่าสุด 14 มิ.ย. · ออกผลแล้ว</p></div>
-            <span class="badge-closed text-xs px-2.5 py-1 font-semibold">ปิด</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--muted);flex-shrink:0"><path d="m9 18 6-6-6-6"/></svg>
           </button>
           <button onclick="openLottery('หวยฮานอย')" class="card p-4 w-full text-left flex items-center gap-3 active:scale-[.99] transition-transform">
             <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style="background:var(--surface-2)">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M4 4h16v4H4zM4 12h16v8H4z"/></svg>
             </div>
             <div class="flex-1 min-w-0"><p class="font-semibold">หวยฮานอย</p><p class="text-xs" style="color:var(--muted)">งวดล่าสุด 15 มิ.ย. · เปิดรับอยู่</p></div>
-            <span class="badge-open text-xs px-2.5 py-1 font-semibold">เปิด</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--muted);flex-shrink:0"><path d="m9 18 6-6-6-6"/></svg>
           </button>
         </div><!-- /card-list -->
       </div>
@@ -238,7 +238,7 @@
                 <p class="font-semibold">งวด 16 มิถุนายน 2568</p>
                 <p class="text-xs mt-0.5" style="color:var(--muted)">โพย 12 รายการ · ยอดรวม ฿8,400</p>
               </div>
-              <span class="badge-open text-xs px-2.5 py-1 font-semibold">เปิดรับ</span>
+              <span class="text-xs px-2.5 py-1 font-semibold" style="background:var(--wait-bg);border:1px solid var(--wait-border);color:var(--wait-text);border-radius:999px;">รอผลรางวัล</span>
             </div>
             <div class="flex flex-wrap gap-1.5 mb-3">
               <span class="pill text-xs px-2 py-0.5">3 ตัวบน ×550</span>
@@ -248,18 +248,16 @@
               <span class="badge-warn text-xs px-2 py-0.5 font-semibold">อั้น 3 เลข</span>
             </div>
             <div class="flex gap-2">
-              <button onclick="openRates()" class="btn-primary flex-1 py-2.5 text-sm flex items-center justify-center gap-1.5">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                จัดการเรท / เลขอั้น
-              </button>
-              <button class="btn-ghost px-4 py-2.5 text-sm flex items-center justify-center gap-1.5">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z"/></svg>
-              </button>
-            </div>
-            <button onclick="openResult()" class="btn-result w-full py-2.5 text-sm mt-2 flex items-center justify-center gap-1.5">
+              <button onclick="openResult(false)" class="btn-result flex-1 py-2.5 text-sm flex items-center justify-center gap-1.5">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
               ออกผลรางวัล
             </button>
+              <button onclick="openRates()"  class="btn-ghost px-4 py-2.5 text-sm flex items-center justify-center gap-1.5" >
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z"/></svg>
+              เรท / เลขอั้น
+              </button>
+            </div>
+            
           </div>
           <!-- งวดออกผลแล้ว -->
           <div class="card p-4">
@@ -268,17 +266,36 @@
                 <p class="font-semibold">งวด 1 มิถุนายน 2568</p>
                 <p class="text-xs mt-0.5" style="color:var(--muted)">โพย 18 รายการ · ยอดรวม ฿12,300</p>
               </div>
-              <span class="badge-closed text-xs px-2.5 py-1 font-semibold">ออกผลแล้ว</span>
+              <span class="text-xs px-2.5 py-1 font-semibold" style="background:var(--win-bg);border:1px solid var(--win-border);color:var(--win-text);border-radius:999px;">ออกผลแล้ว</span>
             </div>
             <div class="flex flex-wrap gap-1.5 mb-3">
               <span class="pill text-xs px-2 py-0.5">3 ตัวบน ×550</span>
               <span class="pill text-xs px-2 py-0.5">2 ตัวบน ×70</span>
               <span class="pill text-xs px-2 py-0.5">2 ตัวล่าง ×70</span>
             </div>
+            <!-- เลขที่ออก -->
+            <div class="flex gap-2 mb-3 px-2 py-2.5 rounded-xl" style="background:var(--win-bg);border:1px solid var(--win-border)">
+              <div class="flex-1 text-center">
+                <p class="text-xs mb-0.5" style="color:var(--muted)">3 ตัวบน</p>
+                <p class="font-bold text-base" style="color:var(--win-text);letter-spacing:.1em">274</p>
+              </div>
+              <div class="flex-1 text-center" style="border-left:1px solid var(--win-border)">
+                <p class="text-xs mb-0.5" style="color:var(--muted)">2 ตัวบน</p>
+                <p class="font-bold text-base" style="color:var(--win-text);letter-spacing:.1em">74</p>
+              </div>
+              <div class="flex-1 text-center" style="border-left:1px solid var(--win-border)">
+                <p class="text-xs mb-0.5" style="color:var(--muted)">2 ตัวล่าง</p>
+                <p class="font-bold text-base" style="color:var(--win-text);letter-spacing:.1em">19</p>
+              </div>
+            </div>
             <div class="flex gap-2">
-              <button onclick="openRates()" class="btn-ghost flex-1 py-2.5 text-sm flex items-center justify-center gap-1.5">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                ดูเรท / เลขอั้น
+              <button onclick="openResult(true)" class="flex-1 py-2.5 text-sm flex items-center justify-center gap-1.5 font-semibold" style="background:var(--surface-2);border:1px solid var(--border);color:var(--text);border-radius:10px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z"/></svg>
+                อัพเดตผลรางวัล
+              </button>
+              <button onclick="openRates()" class="btn-ghost px-4 py-2.5 text-sm flex items-center justify-center gap-1.5">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z"/></svg>
+                เรท / เลขอั้น
               </button>
             </div>
           </div>
@@ -504,7 +521,26 @@
   }
   function openLottery(name){window._lottery=name;stack.push('view-rounds');showView('view-rounds');}
   function openRates(){stack.push('view-rates');showView('view-rates');}
-  function openResult(){stack.push('view-result');showView('view-result');}
+  function openResult(isUpdate){
+    stack.push('view-result');
+    showView('view-result');
+    const btn = document.getElementById('btnConfirm');
+    if(isUpdate){
+      btn.textContent='บันทึกการแก้ไข';
+      // pre-fill เลขที่ออกแล้ว
+      document.getElementById('p3').value='274';
+      document.getElementById('p2u').value='74';
+      document.getElementById('p2d').value='19';
+      onPrize();
+    } else {
+      btn.textContent='ยืนยันออกผล · ล็อกงวด';
+      document.getElementById('p3').value='';
+      document.getElementById('p2u').value='';
+      document.getElementById('p2d').value='';
+      document.getElementById('resultSummary').style.display='none';
+      btn.disabled=true;
+    }
+  }
   function onPrize(){
     const p3=document.getElementById('p3').value;
     const p2u=document.getElementById('p2u').value;
