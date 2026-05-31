@@ -7,8 +7,8 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  [data-theme="light"]{--bg:#ffffff;--bg-soft:#F7F8FA;--surface:#fff;--surface-2:#f1f3f4;--border:#e6e8ea;--text:#111827;--muted:#5a636b;--primary:#06C755;--primary-text:#067a3a;--on-primary:#fff;--win-bg:#E3F7EC;--win-border:#A8E6C3;--win-text:#067a3a;--lose-text:#6b747c;--wait-bg:#fbeee6;--wait-border:#f0d3bf;--wait-text:#9a5526;--shadow-1:0 1px 2px rgba(20,30,40,.05),0 1px 3px rgba(20,30,40,.04)}
-  [data-theme="dark"]{--bg:#14171a;--bg-soft:#14171a;--surface:#1d2125;--surface-2:#272c31;--border:#323840;--text:#e7ebef;--muted:#95a0aa;--primary:#8fcfa6;--primary-text:#8fcfa6;--on-primary:#0d1f14;--win-bg:rgba(143,207,166,.12);--win-border:rgba(143,207,166,.35);--win-text:#8fcfa6;--lose-text:#6b747c;--wait-bg:rgba(224,168,120,.12);--wait-border:rgba(224,168,120,.32);--wait-text:#e0a878;--shadow-1:0 1px 3px rgba(0,0,0,.4)}
+  [data-theme="light"]{--bg:#ffffff;--bg-soft:#F7F8FA;--surface:#fff;--surface-2:#f1f3f4;--border:#e6e8ea;--text:#111827;--muted:#5a636b;--primary:#06C755;--primary-text:#067a3a;--on-primary:#fff;--win-bg:#E3F7EC;--win-border:#A8E6C3;--win-text:#067a3a;--lose-text:#6b747c;--wait-bg:#fbeee6;--wait-border:#f0d3bf;--wait-text:#9a5526;--shadow-1:0 1px 2px rgba(20,30,40,.05),0 1px 3px rgba(20,30,40,.04);--grid-line:rgba(0,0,0,.05)}
+  [data-theme="dark"]{--bg:#14171a;--bg-soft:#14171a;--surface:#1d2125;--surface-2:#272c31;--border:#323840;--text:#e7ebef;--muted:#95a0aa;--primary:#8fcfa6;--primary-text:#8fcfa6;--on-primary:#0d1f14;--win-bg:rgba(143,207,166,.12);--win-border:rgba(143,207,166,.35);--win-text:#8fcfa6;--lose-text:#6b747c;--wait-bg:rgba(224,168,120,.12);--wait-border:rgba(224,168,120,.32);--wait-text:#e0a878;--shadow-1:0 1px 3px rgba(0,0,0,.4);--grid-line:rgba(255,255,255,.05)}
   *{-webkit-tap-highlight-color:transparent;box-sizing:border-box}
   body{font-family:'Sarabun',sans-serif;background:var(--bg-soft);color:var(--text);margin:0;transition:background .25s,color .25s}
   .app{width:100%;margin:0 auto;min-height:100vh;display:flex;flex-direction:column}
@@ -44,15 +44,16 @@
     </div>
   </div>
 
-  <main class="flex-1">
+  <main class="flex-1" style="background-image:linear-gradient(var(--grid-line) 1px,transparent 1px),linear-gradient(90deg,var(--grid-line) 1px,transparent 1px);background-size:44px 44px;">
     <div class="content-wrap px-4 py-4 pb-10">
+
 
       <!-- สรุปรวมของลูกค้า -->
       <div class="card p-4 mb-4">
-        <div class="grid grid-cols-3 gap-2 text-center">
-          <div><p class="text-xs" style="color:var(--muted)">ยอดลงรวม</p><p class="text-lg font-bold">฿18,200</p></div>
-          <div><p class="text-xs" style="color:var(--muted)">ถูกรางวัล</p><p class="text-lg font-bold" style="color:var(--win-text)">฿5,400</p></div>
-          <div><p class="text-xs" style="color:var(--muted)">โพยทั้งหมด</p><p class="text-lg font-bold">8 งวด</p></div>
+        <div class="grid grid-cols-3 gap-2 text-center" style="overflow:hidden">
+          <div><p style="font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">ยอดลงรวม</p><p class="text-base font-bold">฿18,200</p></div>
+          <div><p style="font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">ถูกรางวัล</p><p class="text-base font-bold" style="color:var(--win-text)">฿5,400</p></div>
+          <div><p style="font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">โพยทั้งหมด</p><p class="text-base font-bold">8 งวด</p></div>
         </div>
       </div>
 

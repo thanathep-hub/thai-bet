@@ -22,7 +22,8 @@
     --shadow-1:0 1px 2px rgba(16,40,30,.04),0 4px 12px rgba(16,40,30,.05);
     --shadow-2:0 2px 4px rgba(16,40,30,.05),0 12px 28px rgba(16,40,30,.08);
     --shadow-nav:0 -1px 0 var(--border),0 -8px 24px rgba(16,40,30,.05);
-    --shadow-bar:0 -1px 0 var(--border),0 -8px 24px rgba(16,40,30,.05)
+    --shadow-bar:0 -1px 0 var(--border),0 -8px 24px rgba(16,40,30,.05);
+    --grid-line:rgba(0,0,0,.05)
   }
   [data-theme="dark"]{
     --bg:#0e1311;--bg-soft:#0e1311;--surface:#161c1a;--surface-2:#1e2522;
@@ -37,7 +38,8 @@
     --shadow-1:0 1px 2px rgba(0,0,0,.4),0 4px 12px rgba(0,0,0,.35);
     --shadow-2:0 2px 4px rgba(0,0,0,.5),0 12px 28px rgba(0,0,0,.5);
     --shadow-nav:0 -1px 0 var(--border),0 -8px 24px rgba(0,0,0,.5);
-    --shadow-bar:0 -1px 0 var(--border),0 -8px 24px rgba(0,0,0,.5)
+    --shadow-bar:0 -1px 0 var(--border),0 -8px 24px rgba(0,0,0,.5);
+    --grid-line:rgba(255,255,255,.05)
   }
 
   
@@ -178,13 +180,19 @@
     </div>
   </header>
 
-  <main class="flex-1">
+  <main class="flex-1" style="background-image:linear-gradient(var(--grid-line) 1px,transparent 1px),linear-gradient(90deg,var(--grid-line) 1px,transparent 1px);background-size:44px 44px;">
     <div class="content-wrap px-5 py-4 pb-40">
 
       <!-- ===== VIEW 1: รายการหวย ===== -->
       <div class="view active" id="view-lotteries">
         <!-- HERO: งวดที่กำลังเปิด -->
         <div class="card-hero p-5 mb-5">
+          <div style="position:absolute;inset:0;pointer-events:none;overflow:hidden;">
+            <div style="position:absolute;width:130px;height:130px;border-radius:50%;background:rgba(255,255,255,.10);top:-40px;right:-25px;"></div>
+            <div style="position:absolute;width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,.08);top:15px;right:80px;"></div>
+            <div style="position:absolute;width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.12);bottom:-10px;right:55px;"></div>
+            <div style="position:absolute;width:35px;height:35px;border-radius:50%;background:rgba(255,255,255,.07);bottom:15px;left:30px;"></div>
+          </div>
           <p class="text-xs hero-label mb-1">ยอดรับรวม · งวดที่กำลังเปิด</p>
           <p class="hero-big" style="font-size:2.4rem;line-height:1.1">฿&thinsp;33,500</p>
           <div class="flex items-center gap-4 mt-4">
@@ -215,7 +223,7 @@
             <div class="flex-1 min-w-0"><p class="font-semibold">หวยฮานอย</p><p class="text-xs" style="color:var(--muted)">งวดล่าสุด 15 มิ.ย. · เปิดรับอยู่</p></div>
             <span class="badge-open text-xs px-2.5 py-1 font-semibold">เปิด</span>
           </button>
-        </div>
+        </div><!-- /card-list -->
       </div>
 
       <!-- ===== VIEW 2: งวดของหวย ===== -->

@@ -20,7 +20,8 @@
     --wait-bg:#fbf3ea;--wait-border:#f0e0cb;--wait-text:#8a5f22;
     --shadow-1:0 1px 2px rgba(16,40,30,.04),0 4px 12px rgba(16,40,30,.05);
     --shadow-2:0 2px 4px rgba(16,40,30,.05),0 12px 28px rgba(16,40,30,.08);
-    --shadow-nav:0 -1px 0 var(--border),0 -8px 24px rgba(16,40,30,.05)
+    --shadow-nav:0 -1px 0 var(--border),0 -8px 24px rgba(16,40,30,.05);
+    --grid-line:rgba(0,0,0,.05)
   }
   [data-theme="dark"]{
     --bg:#0e1311;--bg-soft:#0e1311;--surface:#161c1a;--surface-2:#1e2522;
@@ -35,7 +36,8 @@
     --wait-bg:rgba(212,181,110,.12);--wait-border:rgba(212,181,110,.3);--wait-text:#d4b56e;
     --shadow-1:0 1px 2px rgba(0,0,0,.4),0 4px 12px rgba(0,0,0,.35);
     --shadow-2:0 2px 4px rgba(0,0,0,.5),0 12px 28px rgba(0,0,0,.5);
-    --shadow-nav:0 -1px 0 var(--border),0 -8px 24px rgba(0,0,0,.5)
+    --shadow-nav:0 -1px 0 var(--border),0 -8px 24px rgba(0,0,0,.5);
+    --grid-line:rgba(255,255,255,.05)
   }
   *{-webkit-tap-highlight-color:transparent;box-sizing:border-box}
   body{font-family:'Sarabun',sans-serif;background:var(--bg-soft);color:var(--text);margin:0;transition:background .3s,color .3s;-webkit-font-smoothing:antialiased;position:relative}
@@ -63,6 +65,7 @@
   .badge{border-radius:999px;font-weight:600;font-size:11px;padding:4px 11px;display:inline-flex;align-items:center;gap:4px;letter-spacing:.01em}
   .b-done{background:var(--surface-2);border:1px solid var(--border-strong);color:var(--muted)}
   .b-wait{background:var(--wait-bg);border:1px solid var(--wait-border);color:var(--wait-text)}
+  .card-title{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-right:.5rem}
   .num{font-weight:700;letter-spacing:.04em;font-variant-numeric:tabular-nums}
   .stat-num{font-variant-numeric:tabular-nums;letter-spacing:-.01em}
   .row-win{background:var(--win-bg);border:1px solid var(--win-border);padding:12px 14px;border-radius:14px}
@@ -142,15 +145,21 @@
     </div>
   </header>
 
-  <main class="flex-1">
+  <main class="flex-1" style="background-image:linear-gradient(var(--grid-line) 1px,transparent 1px),linear-gradient(90deg,var(--grid-line) 1px,transparent 1px);background-size:44px 44px;">
     <div class="content-wrap px-5 py-4 pb-28">
 
       <!-- ===== VIEW 1: รายการงวด ===== -->
       <div class="view on" id="view-list">
         <!-- สรุปรวมทั้งร้าน (HERO) -->
         <div class="card-hero p-5 mb-5">
+          <div style="position:absolute;inset:0;pointer-events:none;overflow:hidden;">
+            <div style="position:absolute;width:130px;height:130px;border-radius:50%;background:rgba(255,255,255,.10);top:-40px;right:-25px;"></div>
+            <div style="position:absolute;width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,.08);top:15px;right:80px;"></div>
+            <div style="position:absolute;width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.12);bottom:-10px;right:55px;"></div>
+            <div style="position:absolute;width:35px;height:35px;border-radius:50%;background:rgba(255,255,255,.07);bottom:15px;left:30px;"></div>
+          </div>
           <p class="text-xs hero-label mb-1">กำไรสุทธิ · ทุกงวดที่ออกผลแล้ว</p>
-          <p class="hero-big" style="font-size:2.5rem;line-height:1.1">+฿&thinsp;52,700</p>
+          <p class="hero-big" style="font-size:clamp(1.85rem,7vw,2.5rem);line-height:1.1">+฿&thinsp;52,700</p>
           <div class="flex items-center gap-4 mt-4">
             <div><p class="text-xs hero-label">ยอดรับ</p><p class="text-base font-bold hero-sub">฿94,500</p></div>
             <div class="hero-divider"></div>
@@ -159,11 +168,12 @@
         </div>
 
         <p class="text-sm font-semibold mb-2">รายการงวด</p>
+
         <div class="space-y-3">
           <!-- งวดรอออกผล -->
           <button onclick="openRound('หวยรัฐบาล','16 มิ.ย. 2568','wait')" class="card p-4 w-full text-left active:scale-[.99] transition-transform">
             <div class="flex items-center justify-between mb-1">
-              <p class="font-semibold">หวยรัฐบาล · 16 มิ.ย. 2568</p>
+              <p class="font-semibold card-title">หวยรัฐบาล · 16 มิ.ย. 2568</p>
               <span class="badge b-wait">รอออกผล</span>
             </div>
             <p class="text-xs" style="color:var(--muted)">ยอดรับ ฿8,400 · 12 โพย · ยังไม่ออกผล</p>
@@ -182,7 +192,7 @@
           <!-- งวดออกผลแล้ว ขาดทุน -->
           <button onclick="openRound('หวยลาว','14 มิ.ย. 2568','done')" class="card p-4 w-full text-left active:scale-[.99] transition-transform">
             <div class="flex items-center justify-between mb-1">
-              <p class="font-semibold">หวยลาว · 14 มิ.ย. 2568</p>
+              <p class="font-semibold card-title">หวยลาว · 14 มิ.ย. 2568</p>
               <span class="badge b-done">ออกผลแล้ว</span>
             </div>
             <div class="flex items-center justify-between">
@@ -193,7 +203,7 @@
           <!-- อีกงวด -->
           <button onclick="openRound('หวยฮานอย','13 มิ.ย. 2568','done')" class="card p-4 w-full text-left active:scale-[.99] transition-transform">
             <div class="flex items-center justify-between mb-1">
-              <p class="font-semibold">หวยฮานอย · 13 มิ.ย. 2568</p>
+              <p class="font-semibold card-title">หวยฮานอย · 13 มิ.ย. 2568</p>
               <span class="badge b-done">ออกผลแล้ว</span>
             </div>
             <div class="flex items-center justify-between">
@@ -201,7 +211,7 @@
               <p class="text-sm font-bold profit">+฿3,800</p>
             </div>
           </button>
-        </div>
+        </div><!-- /card-list -->
       </div>
 
       <!-- ===== VIEW 2: รายละเอียดงวด ===== -->
