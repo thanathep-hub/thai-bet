@@ -264,7 +264,6 @@
 </div>
 
 <script>
-  function logout(){sessionStorage.removeItem('loggedIn');sessionStorage.removeItem('user');window.location.href='login.html';}
   const BLOCKED=['456','99','07'];
   const params=new URLSearchParams(location.search);
   if(params.get('c')) document.getElementById('custName').textContent=params.get('c');

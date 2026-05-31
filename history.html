@@ -113,7 +113,6 @@
 <script>
   const params=new URLSearchParams(location.search);
   if(params.get('c')) document.getElementById('custName').textContent=params.get('c');
-  function logout(){sessionStorage.removeItem('loggedIn');sessionStorage.removeItem('user');window.location.href='login.html';}
   function toggleTheme(){const h=document.documentElement;const n=h.getAttribute('data-theme')==='dark'?'light':'dark';h.setAttribute('data-theme',n);document.getElementById('iconMoon').style.display=n==='dark'?'none':'block';document.getElementById('iconSun').style.display=n==='dark'?'block':'none';}
 </script>
 </body>

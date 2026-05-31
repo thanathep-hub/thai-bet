@@ -163,7 +163,7 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
           </button>
           <div class="min-w-0">
-            <p class="text-xs truncate" id="crumb" style="color:var(--muted)">ร้านเจ๊หน่อย</p>
+            <p class="text-xs truncate" id="crumb" style="color:var(--muted)"></p>
             <h1 class="text-2xl font-bold truncate" id="title">หวย</h1>
           </div>
         </div>
@@ -486,7 +486,7 @@
           fabLabel=document.getElementById('fabLabel'), fab=document.getElementById('fab');
     if(id==='view-lotteries'){
       backBtn.style.display='none'; search.style.display='block';
-      title.textContent='หวย'; crumb.textContent='ร้านเจ๊หน่อย';
+      title.textContent='หวย'; crumb.textContent='';
       fab.style.display='flex'; fabLabel.textContent='เพิ่มหวย';
     } else if(id==='view-rounds'){
       backBtn.style.display='flex'; search.style.display='none';
