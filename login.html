@@ -126,6 +126,18 @@
     display:flex;align-items:center;justify-content:center;
   }
 
+  /* DateTime */
+  .datetime{text-align:center;margin-bottom:22px;}
+  .datetime-date{font-size:.82rem;color:var(--muted);margin-bottom:2px;}
+  .datetime-time{font-size:1.65rem;font-weight:800;letter-spacing:.03em;font-variant-numeric:tabular-nums;color:var(--text);}
+
+  /* Contact admin */
+  .contact-link{text-align:right;margin-top:14px;font-size:.8rem;color:var(--muted);}
+  .contact-link a{color:var(--primary-text);font-weight:600;text-decoration:none;}
+
+  /* Footer */
+  .footer{text-align:center;margin-top:28px;font-size:.72rem;color:var(--muted);line-height:1.8;}
+
   /* Shake animation for wrong password */
   @keyframes shake{
     0%,100%{transform:none}
@@ -149,8 +161,12 @@
     <div class="brand-icon">
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h.01M12 9h.01M17 9h.01M7 14h5"/></svg>
     </div>
-    <p class="brand-name">ร้านเจ๊หน่อย</p>
-    <p class="brand-sub">ระบบจัดการหวย</p>
+    <p class="brand-name">ระบบจัดการหวย</p>
+  </div>
+
+  <div class="datetime">
+    <p class="datetime-date" id="dateStr"></p>
+    <p class="datetime-time" id="timeStr"></p>
   </div>
 
   <div class="card" id="loginCard">
@@ -178,7 +194,13 @@
     </div>
 
     <button class="btn-login" id="btnLogin" onclick="doLogin()">เข้าสู่ระบบ</button>
+    <p class="contact-link">เข้าสู่ระบบไม่ได้ ? <a href="#">ติดต่อแอดมิน</a></p>
   </div>
+
+  <footer class="footer">
+    ระบบจัดการหวย<br>
+    v1.0 &nbsp;·&nbsp; © 2568
+  </footer>
 </div>
 
 <script>
@@ -229,6 +251,20 @@
     document.getElementById('iconMoon').style.display = n === 'dark' ? 'none' : '';
     document.getElementById('iconSun').style.display = n === 'dark' ? '' : 'none';
   }
+
+  // Clock
+  const DAYS = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัส','ศุกร์','เสาร์'];
+  const MONTHS = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  function updateClock() {
+    const now = new Date();
+    document.getElementById('dateStr').textContent =
+      `วัน${DAYS[now.getDay()]}ที่ ${now.getDate()} ${MONTHS[now.getMonth()]} ${now.getFullYear()+543}`;
+    document.getElementById('timeStr').textContent =
+      [now.getHours(), now.getMinutes(), now.getSeconds()]
+        .map(n => String(n).padStart(2,'0')).join(':');
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
 
   // Enter key submits
   document.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
