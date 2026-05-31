@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ลงโพย · ร้านเจ๊หน่อย</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+  /* ===== Premium palette v2 (shared) ===== */
+  [data-theme="light"]{
+    --bg:#ffffff;--bg-soft:#fbfcfd;--surface:#ffffff;--surface-2:#f4f6f8;
+    --border:#edf0f3;--border-strong:#e2e6ea;
+    --text:#0f1a17;--muted:#5b6660;
+    --primary:#0a7d55;--primary-press:#086547;--primary-text:#0a7d55;--on-primary:#fff;
+    --accent:#b8954a;--dot:rgba(10,125,85,.10);--hero-from:#0a7d55;--hero-to:#075e40;
+    --win-bg:#eef7f1;--win-border:#cfe8da;--win-text:#0a7d55;
+    --lose-text:#6b747c;--loss:#b0453c;
+    --wait-bg:#fbf3ea;--wait-border:#f0e0cb;--wait-text:#8a5f22;
+    --warn-bg:#fbeeee;--warn-border:#f0cfcf;--warn-text:#a3433b;
+    --shadow-1:0 1px 2px rgba(16,40,30,.04),0 4px 12px rgba(16,40,30,.05);
+    --shadow-2:0 2px 4px rgba(16,40,30,.05),0 12px 28px rgba(16,40,30,.08);
+    --shadow-nav:0 -1px 0 var(--border),0 -8px 24px rgba(16,40,30,.05);
+    --shadow-bar:0 -1px 0 var(--border),0 -8px 24px rgba(16,40,30,.05)
+  }
+  [data-theme="dark"]{
+    --bg:#0e1311;--bg-soft:#0e1311;--surface:#161c1a;--surface-2:#1e2522;
+    --border:#283330;--border-strong:#32403c;
+    --text:#e9efec;--muted:#8b968f;
+    --primary:#34c98a;--primary-press:#2bb47b;--primary-text:#4fd49b;--on-primary:#06241a;
+    --accent:#d4b56e;--dot:rgba(79,212,155,.10);--hero-from:#117a57;--hero-to:#0c5b41;
+    --win-bg:rgba(52,201,138,.12);--win-border:rgba(52,201,138,.32);--win-text:#4fd49b;
+    --lose-text:#6b747c;--loss:#e0817a;
+    --wait-bg:rgba(212,181,110,.12);--wait-border:rgba(212,181,110,.3);--wait-text:#d4b56e;
+    --warn-bg:rgba(224,129,122,.12);--warn-border:rgba(224,129,122,.3);--warn-text:#e0817a;
+    --shadow-1:0 1px 2px rgba(0,0,0,.4),0 4px 12px rgba(0,0,0,.35);
+    --shadow-2:0 2px 4px rgba(0,0,0,.5),0 12px 28px rgba(0,0,0,.5);
+    --shadow-nav:0 -1px 0 var(--border),0 -8px 24px rgba(0,0,0,.5);
+    --shadow-bar:0 -1px 0 var(--border),0 -8px 24px rgba(0,0,0,.5)
+  }
+
+  
+  
+  *{-webkit-tap-highlight-color:transparent;box-sizing:border-box}
+  body{font-family:'Sarabun',sans-serif;background:var(--bg-soft);color:var(--text);margin:0;transition:background .25s,color .25s}
+  .app{width:100%;margin:0 auto;min-height:100vh;display:flex;flex-direction:column}
+  .content-wrap{width:100%;max-width:640px;margin:0 auto}
+  .card{background:var(--surface);border-radius:16px;box-shadow:var(--shadow-1)}
+  .field{background:var(--surface-2);border:1px solid var(--border);color:var(--text);border-radius:12px;transition:border-color .15s}
+  .field:focus{outline:none;border-color:var(--primary)}
+  .field::placeholder{color:var(--muted)}
+  .btn-primary{background:var(--primary);color:var(--on-primary);border-radius:12px;font-weight:600;transition:transform .1s,background .15s}
+  .btn-primary:active{transform:scale(.97);background:var(--primary-press)}
+  .btn-primary:disabled{opacity:.4}
+  .btn-ghost{background:var(--surface-2);border:1px solid var(--border);color:var(--text);border-radius:12px;transition:transform .1s}
+  .btn-ghost:active{transform:scale(.96)}
+  .seg{background:var(--surface-2);border:1px solid var(--border);color:var(--muted);border-radius:10px;padding:10px 4px;font-size:13px;font-weight:600;transition:all .12s}
+  .seg.on{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
+  .num-input{background:var(--surface-2);border:2px solid var(--border);color:var(--text);border-radius:14px;text-align:center;font-size:28px;font-weight:700;letter-spacing:.15em;padding:14px;width:100%}
+  .num-input:focus{outline:none;border-color:var(--primary)}
+  .chip{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:8px 12px;font-weight:700;font-size:16px;letter-spacing:.08em;display:inline-flex;align-items:center;gap:8px}
+  .chip.blocked{background:var(--warn-bg);border-color:var(--warn-border);color:var(--warn-text)}
+  .row{background:var(--surface);border:1px solid var(--border);border-radius:12px;transition:border-color .12s,background .12s}
+  .row.sel{border-color:var(--primary);background:color-mix(in srgb,var(--primary) 8%,var(--surface))}
+  .switch{width:44px;height:26px;background:var(--border);border-radius:999px;position:relative;transition:background .2s;cursor:pointer;flex-shrink:0}
+  .switch.on{background:var(--primary)}
+  .switch::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;background:#fff;border-radius:50%;transition:transform .2s}
+  .switch.on::after{transform:translateX(18px)}
+  .step-dot{width:8px;height:8px;border-radius:50%;background:var(--border)}
+  .step-dot.on{background:var(--primary);width:22px;border-radius:999px}
+  .topbar{position:sticky;top:0;z-index:20;background:var(--bg-soft);border-bottom:1px solid var(--border)}
+  .bottombar{position:fixed;bottom:0;left:0;right:0;z-index:30;background:var(--surface);border-top:1px solid var(--border);box-shadow:var(--shadow-bar)}
+  .bottombar-inner{max-width:640px;margin:0 auto}
+  .view{display:none}.view.on{display:block}
+
+  /* ===== dot grid bg + hero card (shared) ===== */
+  body{position:relative}
+  body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background-image:radial-gradient(circle at 1px 1px,var(--dot) 1px,transparent 0);
+    background-size:22px 22px;
+    -webkit-mask-image:linear-gradient(to bottom,#000 0%,transparent 75%);
+    mask-image:linear-gradient(to bottom,#000 0%,transparent 75%)}
+  .card{border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow-1);transition:box-shadow .25s,transform .15s,border-color .25s}
+  button.card:hover{box-shadow:var(--shadow-2);border-color:var(--border-strong)}
+  .card-hero{position:relative;overflow:hidden;border:none;border-radius:22px;color:#fff;
+    background:linear-gradient(135deg,var(--hero-from),var(--hero-to));
+    box-shadow:0 8px 28px rgba(10,94,64,.32),0 2px 6px rgba(10,94,64,.2)}
+  .card-hero::after{content:'';position:absolute;top:-40%;right:-15%;width:60%;height:160%;
+    background:radial-gradient(circle,rgba(255,255,255,.14),transparent 65%);pointer-events:none}
+  .hero-label{color:rgba(255,255,255,.72)}
+  .hero-big{font-weight:800;letter-spacing:-.01em;font-variant-numeric:tabular-nums;word-spacing:.04em}
+  .hero-sub{color:rgba(255,255,255,.85);font-variant-numeric:tabular-nums}
+  .hero-divider{width:1px;background:rgba(255,255,255,.18);align-self:stretch}
+  h1{letter-spacing:-.02em}
+
+  /* ===== Fallback utilities (ครบ ทำงานแม้ Tailwind CDN โหลดไม่ได้) ===== */
+  .sticky{position:sticky}.relative{position:relative}.absolute{position:absolute}.fixed{position:fixed}
+  .top-0{top:0}.z-20{z-index:20}.z-30{z-index:30}.z-50{z-index:50}
+  .flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}
+  .flex-1{flex:1 1 0%}.flex-shrink-0{flex-shrink:0}.flex-wrap{flex-wrap:wrap}.flex-col{flex-direction:column}
+  .items-center{align-items:center}.items-start{align-items:flex-start}
+  .justify-between{justify-content:space-between}.justify-center{justify-content:center}
+  .grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .gap-1{gap:.25rem}.gap-1\.5{gap:.375rem}.gap-2{gap:.5rem}.gap-2\.5{gap:.625rem}.gap-3{gap:.75rem}.gap-4{gap:1rem}
+  .text-center{text-align:center}.text-left{text-align:left}.text-right{text-align:right}
+  .w-full{width:100%}.w-6{width:1.5rem}.w-9{width:2.25rem}.w-10{width:2.5rem}.w-11{width:2.75rem}.w-24{width:6rem}
+  .h-1{height:.25rem}.h-6{height:1.5rem}.h-9{height:2.25rem}.h-10{height:2.5rem}.h-11{height:2.75rem}
+  .min-w-0{min-width:0}
+  .truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.overflow-hidden{overflow:hidden}
+  .rounded-md{border-radius:.375rem}.rounded-xl{border-radius:.75rem}.rounded-full{border-radius:9999px}
+  .px-2{padding-left:.5rem;padding-right:.5rem}.px-2\.5{padding-left:.625rem;padding-right:.625rem}
+  .px-3{padding-left:.75rem;padding-right:.75rem}.px-3\.5{padding-left:.875rem;padding-right:.875rem}
+  .px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}
+  .py-0\.5{padding-top:.125rem;padding-bottom:.125rem}.py-1{padding-top:.25rem;padding-bottom:.25rem}
+  .py-1\.5{padding-top:.375rem;padding-bottom:.375rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}
+  .py-2\.5{padding-top:.625rem;padding-bottom:.625rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}
+  .py-3\.5{padding-top:.875rem;padding-bottom:.875rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}
+  .pt-4{padding-top:1rem}.pt-5{padding-top:1.25rem}
+  .pb-4{padding-bottom:1rem}.pb-28{padding-bottom:7rem}.pb-32{padding-bottom:8rem}.pb-40{padding-bottom:10rem}
+  .pl-10{padding-left:2.5rem}.pr-4{padding-right:1rem}
+  .p-3{padding:.75rem}.p-4{padding:1rem}.p-5{padding:1.5rem}
+  .mb-1{margin-bottom:.25rem}.mb-1\.5{margin-bottom:.375rem}.mb-2{margin-bottom:.5rem}.mb-2\.5{margin-bottom:.625rem}
+  .mb-3{margin-bottom:.75rem}.mb-4{margin-bottom:1rem}.mb-5{margin-bottom:1.25rem}
+  .mt-0\.5{margin-top:.125rem}.mt-2{margin-top:.5rem}.mt-3{margin-top:.75rem}.mt-4{margin-top:1rem}.mt-5{margin-top:1.25rem}.mt-6{margin-top:1.5rem}
+  .ml-2{margin-left:.5rem}.mr-1{margin-right:.25rem}
+  .space-y-2>*+*{margin-top:.5rem}.space-y-2\.5>*+*{margin-top:.625rem}.space-y-3>*+*{margin-top:.75rem}.space-y-4>*+*{margin-top:1rem}
+  .text-xs{font-size:.75rem;line-height:1.1rem}.text-sm{font-size:.875rem;line-height:1.35rem}.text-base{font-size:1rem;line-height:1.5rem}
+  .text-lg{font-size:1.125rem;line-height:1.6rem}.text-xl{font-size:1.25rem;line-height:1.75rem}
+  .text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}
+  .font-medium{font-weight:500}.font-semibold{font-weight:600}.font-bold{font-weight:700}
+  .tracking-wider{letter-spacing:.05em}
+  .transition-transform{transition:transform .15s}
+  .-translate-y-1\/2{transform:translateY(-50%)}
+  .left-3{left:.75rem}.top-1\/2{top:50%}
+  .active\:scale-\[\.99\]:active{transform:scale(.99)}
+
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="content-wrap px-4 py-3 flex items-center gap-3">
+      <a href="index.html" class="btn-ghost w-9 h-9 flex items-center justify-center flex-shrink-0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg></a>
+      <div class="flex-1 min-w-0">
+        <p class="text-xs" style="color:var(--muted)">ลงโพยให้</p>
+        <p class="font-bold truncate" id="custName">ลูกค้า</p>
+      </div>
+      <div class="flex items-center gap-1.5" id="steps">
+        <span class="step-dot on"></span><span class="step-dot"></span>
+      </div>
+    </div>
+  </div>
+
+  <main class="flex-1">
+    <div class="content-wrap px-4 py-4 pb-32">
+
+      <!-- ===== STEP 1: เลือก + กรอกเลข ===== -->
+      <div class="view on" id="step1">
+        <div class="grid grid-cols-2 gap-2 mb-3">
+          <div>
+            <label class="block text-xs mb-1.5 font-medium" style="color:var(--muted)">หวย</label>
+            <select class="field w-full px-3 py-3 text-sm"><option>หวยรัฐบาล</option><option>หวยลาว</option><option>หวยฮานอย</option></select>
+          </div>
+          <div>
+            <label class="block text-xs mb-1.5 font-medium" style="color:var(--muted)">งวด</label>
+            <select class="field w-full px-3 py-3 text-sm"><option>16 มิ.ย. 2568</option></select>
+          </div>
+        </div>
+
+        <label class="block text-xs mb-1.5 font-medium" style="color:var(--muted)">ประเภท</label>
+        <div class="grid grid-cols-4 gap-1.5 mb-2" id="types">
+          <button class="seg on" data-len="2" data-two="1" onclick="pickType(this)">2 บน</button>
+          <button class="seg" data-len="2" data-two="1" onclick="pickType(this)">2 ล่าง</button>
+          <button class="seg" data-len="3" onclick="pickType(this)">3 บน</button>
+          <button class="seg" data-len="3" onclick="pickType(this)">3 โต๊ด</button>
+          <button class="seg" data-len="3" onclick="pickType(this)">3 หน้า</button>
+          <button class="seg" data-len="3" onclick="pickType(this)">3 ล่าง</button>
+          <button class="seg" data-len="1" onclick="pickType(this)">วิ่งบน</button>
+          <button class="seg" data-len="1" onclick="pickType(this)">วิ่งล่าง</button>
+        </div>
+        <!-- ตัวเลือกรูด (เฉพาะ 2 ตัว) -->
+        <div class="flex items-center gap-1.5 mb-4" id="rudRow">
+          <span class="text-xs mr-1" style="color:var(--muted)">รูด:</span>
+          <button class="seg flex-1" data-rud="none" onclick="pickRud(this)" style="padding:7px">ปกติ</button>
+          <button class="seg flex-1" data-rud="front" onclick="pickRud(this)" style="padding:7px">รูดหน้า</button>
+          <button class="seg flex-1" data-rud="back" onclick="pickRud(this)" style="padding:7px">รูดหลัง</button>
+        </div>
+
+        <div class="card p-4 mb-3">
+          <input id="numInput" class="num-input mb-3" placeholder="กรอกเลข" inputmode="numeric" autocomplete="off">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+              <div class="switch on" id="autoSwitch" onclick="toggleAuto()"></div>
+              <span class="text-sm font-medium">เพิ่มอัตโนมัติ</span>
+            </div>
+            <button id="addManual" onclick="addNum()" class="btn-ghost px-4 py-2 text-sm" style="display:none">เพิ่มเลข</button>
+          </div>
+          <p id="warn" class="text-xs mt-2 font-medium" style="color:var(--warn-text);display:none">⚠ เลขนี้ปิดรับ (อั้น) — ลงไม่ได้</p>
+        </div>
+
+        <div class="flex items-center justify-between mb-2">
+          <p class="text-sm font-semibold">เลขที่กรอก (<span id="count">0</span>)</p>
+          <button onclick="clearAll()" class="text-xs" style="color:var(--muted)">ล้างทั้งหมด</button>
+        </div>
+        <div id="numList" class="flex flex-wrap gap-2"></div>
+        <p id="empty1" class="text-sm text-center py-6" style="color:var(--muted)">เลือกประเภทแล้วเริ่มกรอกเลขได้เลย</p>
+      </div>
+
+      <!-- ===== STEP 2: ใส่ยอด ===== -->
+      <div class="view" id="step2">
+        <!-- เครื่องมือใส่ยอดเร็ว -->
+        <div class="card p-4 mb-4">
+          <p class="text-xs mb-2 font-medium" style="color:var(--muted)">ใส่ยอดเท่ากันให้รายการที่เลือก (หรือทั้งหมดถ้าไม่ได้เลือก)</p>
+          <div class="flex gap-2">
+            <input id="bulkAmt" class="field flex-1 px-4 py-3 text-base text-center font-semibold" placeholder="ยอด ฿" inputmode="numeric">
+            <button onclick="applyBulk()" class="btn-primary px-5 text-sm">ใส่ยอด</button>
+          </div>
+          <div class="flex items-center justify-between mt-3 text-xs">
+            <button onclick="selectAll()" style="color:var(--primary-text)" class="font-medium">เลือกทั้งหมด</button>
+            <span style="color:var(--muted)">เลือกแล้ว <span id="selCount">0</span> รายการ</span>
+          </div>
+        </div>
+
+        <p class="text-sm font-semibold mb-2">รายการโพย</p>
+        <div id="betList" class="space-y-2"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- BOTTOM BAR -->
+  <div class="bottombar">
+    <div class="bottombar-inner px-4 py-3">
+      <!-- step 1 footer -->
+      <div id="foot1">
+        <button id="toStep2" onclick="goStep2()" class="btn-primary w-full py-3.5 flex items-center justify-center gap-2" disabled>
+          ใส่ยอด (<span id="footCount">0</span> เลข)
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+      </div>
+      <!-- step 2 footer -->
+      <div id="foot2" style="display:none">
+        <div class="flex items-center justify-between mb-2.5">
+          <span class="text-sm" style="color:var(--muted)">ยอดรวมทั้งโพย</span>
+          <span class="text-xl font-bold" style="color:var(--primary-text)">฿<span id="grandTotal">0</span></span>
+        </div>
+        <div class="flex gap-2">
+          <button onclick="backStep1()" class="btn-ghost px-5 py-3.5 text-sm">ย้อน</button>
+          <button onclick="save()" class="btn-primary flex-1 py-3.5">บันทึกโพย</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const BLOCKED=['456','99','07'];     // เลขอั้น (ตัวอย่าง)
+  // ดึงชื่อลูกค้าจาก URL ?c=
+  const params=new URLSearchParams(location.search);
+  if(params.get('c')) document.getElementById('custName').textContent=params.get('c');
+  // init: default 2บน -> แสดงแถวรูด, ตั้ง "ปกติ" เป็น on
+  document.querySelector('#rudRow .seg[data-rud="none"]').classList.add('on');
+  let curType='2 บน', curLen=2, auto=true, curRud='none', isTwo=true;
+  let nums=[];   // {type, num, len}
+  let amounts=[]; // ยอด ตาม index ของ nums
+  let selected=new Set();
+
+  function pickType(el){
+    document.querySelectorAll('#types .seg').forEach(s=>s.classList.remove('on'));
+    el.classList.add('on');
+    curType=el.textContent; curLen=parseInt(el.dataset.len);
+    isTwo = el.dataset.two==='1';
+    // แสดงแถวรูดเฉพาะ 2 ตัว
+    document.getElementById('rudRow').style.display = isTwo ? 'flex' : 'none';
+    if(!isTwo){ curRud='none'; resetRud(); }
+    updateInputHint();
+    document.getElementById('numInput').focus();
+  }
+  function resetRud(){
+    document.querySelectorAll('#rudRow .seg').forEach(s=>s.classList.remove('on'));
+    document.querySelector('#rudRow .seg[data-rud="none"]').classList.add('on');
+  }
+  function pickRud(el){
+    document.querySelectorAll('#rudRow .seg').forEach(s=>s.classList.remove('on'));
+    el.classList.add('on');
+    curRud=el.dataset.rud;
+    updateInputHint();
+    document.getElementById('numInput').focus();
+  }
+  function updateInputHint(){
+    const inp=document.getElementById('numInput');
+    if(curRud!=='none') inp.placeholder = curRud==='front' ? 'ใส่เลขหน้า 1 ตัว' : 'ใส่เลขหลัง 1 ตัว';
+    else inp.placeholder = 'กรอกเลข';
+  }
+  // จำนวนหลักที่ต้องกรอก (รูดต้องการแค่ 1 หลัก)
+  function neededLen(){ return curRud!=='none' ? 1 : curLen; }
+  function toggleAuto(){
+    auto=!auto;
+    document.getElementById('autoSwitch').classList.toggle('on',auto);
+    document.getElementById('addManual').style.display=auto?'none':'block';
+  }
+  const numInput=document.getElementById('numInput');
+  numInput.addEventListener('input',()=>{
+    const need=neededLen();
+    let v=numInput.value.replace(/\D/g,'');
+    if(v.length>need) v=v.slice(0,need);
+    numInput.value=v;
+    const showWarn = curRud==='none' && BLOCKED.includes(v) && v.length===need;
+    document.getElementById('warn').style.display = showWarn ? 'block':'none';
+    if(auto && v.length===need && !showWarn) addNum();
+  });
+  numInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){e.preventDefault();addNum();} });
+
+  function addNum(){
+    const need=neededLen();
+    let v=numInput.value.replace(/\D/g,'');
+    if(v.length!==need) return;
+
+    if(curRud!=='none'){
+      // แตกเลขรูด: 1 หลัก -> 10 เลข
+      const expanded=[];
+      for(let d=0; d<=9; d++){
+        const n = curRud==='front' ? v+d : d+v;   // รูดหน้า: Vd, รูดหลัง: dV
+        if(!BLOCKED.includes(n)) expanded.push(n);
+      }
+      expanded.forEach(n=>nums.push({type:curType,num:n,len:2,rud:curRud}));
+    } else {
+      if(BLOCKED.includes(v)){document.getElementById('warn').style.display='block';return;}
+      nums.push({type:curType,num:v,len:curLen});
+    }
+    numInput.value=''; document.getElementById('warn').style.display='none';
+    numInput.focus(); renderNums();
+  }
+  function removeNum(i){ nums.splice(i,1); renderNums(); }
+  function clearAll(){ nums=[]; renderNums(); }
+  function renderNums(){
+    const list=document.getElementById('numList'), empty=document.getElementById('empty1');
+    list.innerHTML='';
+    empty.style.display = nums.length? 'none':'block';
+    nums.forEach((n,i)=>{
+      list.insertAdjacentHTML('beforeend',
+        `<span class="chip">${n.num}<span style="font-size:11px;font-weight:500;color:var(--muted)">${n.type}</span><button onclick="removeNum(${i})" style="color:var(--muted)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></button></span>`);
+    });
+    document.getElementById('count').textContent=nums.length;
+    document.getElementById('footCount').textContent=nums.length;
+    document.getElementById('toStep2').disabled = nums.length===0;
+  }
+
+  function goStep2(){
+    if(nums.length===0) return;
+    amounts=nums.map((_,i)=>amounts[i]||0);
+    selected.clear();
+    document.getElementById('step1').classList.remove('on');
+    document.getElementById('step2').classList.add('on');
+    document.getElementById('foot1').style.display='none';
+    document.getElementById('foot2').style.display='block';
+    document.querySelectorAll('#steps .step-dot')[0].classList.remove('on');
+    document.querySelectorAll('#steps .step-dot')[1].classList.add('on');
+    renderBets();
+  }
+  function backStep1(){
+    document.getElementById('step2').classList.remove('on');
+    document.getElementById('step1').classList.add('on');
+    document.getElementById('foot2').style.display='none';
+    document.getElementById('foot1').style.display='block';
+    document.querySelectorAll('#steps .step-dot')[1].classList.remove('on');
+    document.querySelectorAll('#steps .step-dot')[0].classList.add('on');
+  }
+  function toggleSel(i){
+    if(selected.has(i)) selected.delete(i); else selected.add(i);
+    renderBets();
+  }
+  function selectAll(){
+    if(selected.size===nums.length) selected.clear();
+    else nums.forEach((_,i)=>selected.add(i));
+    renderBets();
+  }
+  function applyBulk(){
+    const amt=parseInt(document.getElementById('bulkAmt').value)||0;
+    if(!amt) return;
+    const targets = selected.size>0 ? [...selected] : nums.map((_,i)=>i);
+    targets.forEach(i=>amounts[i]=amt);
+    document.getElementById('bulkAmt').value='';
+    renderBets();
+  }
+  function setAmt(i,val){ amounts[i]=parseInt(val)||0; updateTotal(); }
+  function renderBets(){
+    const list=document.getElementById('betList');
+    list.innerHTML='';
+    nums.forEach((n,i)=>{
+      const sel=selected.has(i);
+      list.insertAdjacentHTML('beforeend',
+        `<div class="row flex items-center gap-3 px-3 py-2.5 ${sel?'sel':''}">
+          <button onclick="toggleSel(${i})" class="w-6 h-6 rounded-md flex items-center justify-center flex-shrink-0" style="border:2px solid ${sel?'var(--primary)':'var(--border)'};background:${sel?'var(--primary)':'transparent'}">
+            ${sel?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--on-primary)" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>':''}
+          </button>
+          <div class="flex-1 min-w-0">
+            <span class="font-bold text-lg tracking-wider">${n.num}</span>
+            <span class="text-xs ml-2" style="color:var(--muted)">${n.type}</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <span class="text-xs" style="color:var(--muted)">฿</span>
+            <input class="field w-24 px-2 py-2 text-sm text-center" inputmode="numeric" value="${amounts[i]||''}" placeholder="0" oninput="setAmt(${i},this.value)">
+          </div>
+        </div>`);
+    });
+    document.getElementById('selCount').textContent=selected.size;
+    updateTotal();
+  }
+  function updateTotal(){
+    const total=amounts.reduce((s,a)=>s+(a||0),0);
+    document.getElementById('grandTotal').textContent=total.toLocaleString();
+  }
+  function save(){
+    const total=amounts.reduce((s,a)=>s+(a||0),0);
+    if(total===0) return;
+    window.location.href='index.html';
+  }
+</script>
+</body>
+</html>

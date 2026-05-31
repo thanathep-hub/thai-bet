@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ประวัติการลงหวย · ร้านเจ๊หน่อย</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  [data-theme="light"]{--bg:#ffffff;--bg-soft:#F7F8FA;--surface:#fff;--surface-2:#f1f3f4;--border:#e6e8ea;--text:#111827;--muted:#5a636b;--primary:#06C755;--primary-text:#067a3a;--on-primary:#fff;--win-bg:#E3F7EC;--win-border:#A8E6C3;--win-text:#067a3a;--lose-text:#6b747c;--wait-bg:#fbeee6;--wait-border:#f0d3bf;--wait-text:#9a5526;--shadow-1:0 1px 2px rgba(20,30,40,.05),0 1px 3px rgba(20,30,40,.04)}
+  [data-theme="dark"]{--bg:#14171a;--bg-soft:#14171a;--surface:#1d2125;--surface-2:#272c31;--border:#323840;--text:#e7ebef;--muted:#95a0aa;--primary:#8fcfa6;--primary-text:#8fcfa6;--on-primary:#0d1f14;--win-bg:rgba(143,207,166,.12);--win-border:rgba(143,207,166,.35);--win-text:#8fcfa6;--lose-text:#6b747c;--wait-bg:rgba(224,168,120,.12);--wait-border:rgba(224,168,120,.32);--wait-text:#e0a878;--shadow-1:0 1px 3px rgba(0,0,0,.4)}
+  *{-webkit-tap-highlight-color:transparent;box-sizing:border-box}
+  body{font-family:'Sarabun',sans-serif;background:var(--bg-soft);color:var(--text);margin:0;transition:background .25s,color .25s}
+  .app{width:100%;margin:0 auto;min-height:100vh;display:flex;flex-direction:column}
+  .content-wrap{width:100%;max-width:640px;margin:0 auto}
+  .card{background:var(--surface);border-radius:16px;box-shadow:var(--shadow-1);padding:4px}
+  .btn-ghost{background:var(--surface-2);border:1px solid var(--border);color:var(--text);border-radius:12px;transition:transform .1s}
+  .btn-ghost:active{transform:scale(.96)}
+  .topbar{position:sticky;top:0;z-index:20;background:var(--bg-soft);border-bottom:1px solid var(--border)}
+  .badge{border-radius:999px;font-weight:600;font-size:11px;padding:3px 10px;display:inline-flex;align-items:center;gap:4px}
+  .b-win{background:var(--win-bg);border:1px solid var(--win-border);color:var(--win-text)}
+  .b-wait{background:var(--wait-bg);border:1px solid var(--wait-border);color:var(--wait-text)}
+  .b-lose{background:var(--surface-2);border:1px solid var(--border);color:var(--lose-text)}
+  .num{font-weight:700;letter-spacing:.06em}
+  .row-win{background:var(--win-bg);border:1px solid var(--win-border);padding:10px 12px}
+  .row-plain{background:var(--surface-2);border:1px solid var(--border);padding:10px 12px}
+  .row-lose{background:var(--surface-2);border:1px solid var(--border);opacity:.7;padding:10px 12px}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="topbar">
+    <div class="content-wrap px-4 py-3 flex items-center gap-3">
+      <a href="index.html" class="btn-ghost w-9 h-9 flex items-center justify-center flex-shrink-0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg></a>
+      <div class="flex-1 min-w-0">
+        <p class="text-xs" style="color:var(--muted)">ประวัติการลงหวย</p>
+        <p class="font-bold truncate" id="custName">ลูกค้า</p>
+      </div>
+      <button onclick="toggleTheme()" class="btn-ghost w-9 h-9 flex items-center justify-center flex-shrink-0">
+        <svg id="iconMoon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+        <svg id="iconSun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <main class="flex-1">
+    <div class="content-wrap px-4 py-4 pb-10">
+
+      <!-- สรุปรวมของลูกค้า -->
+      <div class="card p-4 mb-4">
+        <div class="grid grid-cols-3 gap-2 text-center">
+          <div><p class="text-xs" style="color:var(--muted)">ยอดลงรวม</p><p class="text-lg font-bold">฿18,200</p></div>
+          <div><p class="text-xs" style="color:var(--muted)">ถูกรางวัล</p><p class="text-lg font-bold" style="color:var(--win-text)">฿5,400</p></div>
+          <div><p class="text-xs" style="color:var(--muted)">โพยทั้งหมด</p><p class="text-lg font-bold">8 งวด</p></div>
+        </div>
+      </div>
+
+      <!-- งวดเปิด: รอออกผล -->
+      <div class="mb-5">
+        <div class="flex items-center justify-between mb-2">
+          <div><p class="font-semibold">หวยรัฐบาล · 16 มิ.ย. 2568</p><p class="text-xs" style="color:var(--muted)">ลง ฿4,200 · 6 รายการ</p></div>
+          <span class="badge b-wait"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>รอออกผล</span>
+        </div>
+        <div class="card p-3 space-y-2">
+          <div class="row-plain rounded-lg flex items-center justify-between px-3 py-2"><div><span class="num">19</span><span class="text-xs ml-2" style="color:var(--muted)">2 ตัวบน</span></div><span class="text-sm">฿1,000</span></div>
+          <div class="row-plain rounded-lg flex items-center justify-between px-3 py-2"><div><span class="num">456</span><span class="text-xs ml-2" style="color:var(--muted)">3 ตัวบน</span></div><span class="text-sm">฿500</span></div>
+          <div class="row-plain rounded-lg flex items-center justify-between px-3 py-2"><div><span class="num">88</span><span class="text-xs ml-2" style="color:var(--muted)">2 ตัวล่าง</span></div><span class="text-sm">฿700</span></div>
+          <p class="text-xs text-center pt-1" style="color:var(--muted)">และอีก 3 รายการ</p>
+        </div>
+      </div>
+
+      <!-- งวดออกผลแล้ว: มีถูก -->
+      <div class="mb-5">
+        <div class="flex items-center justify-between mb-2">
+          <div><p class="font-semibold">หวยรัฐบาล · 1 มิ.ย. 2568</p><p class="text-xs" style="color:var(--muted)">ผลออก: 3บน <span class="num">274</span> · 2ล่าง <span class="num">19</span></p></div>
+          <span class="badge b-win"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>ถูก ฿3,500</span>
+        </div>
+        <div class="card p-3 space-y-2">
+          <div class="row-win rounded-lg flex items-center justify-between px-3 py-2">
+            <div class="flex items-center gap-2"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--win-text)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg><span class="num">19</span><span class="text-xs" style="color:var(--muted)">2 ตัวล่าง</span></div>
+            <div class="text-right"><p class="text-xs" style="color:var(--muted)">฿50 ×70</p><p class="text-sm font-bold" style="color:var(--win-text)">+฿3,500</p></div>
+          </div>
+          <div class="row-lose rounded-lg flex items-center justify-between px-3 py-2"><div><span class="num">82</span><span class="text-xs ml-2" style="color:var(--muted)">2 ตัวบน</span></div><span class="text-sm" style="color:var(--muted)">฿200</span></div>
+          <div class="row-lose rounded-lg flex items-center justify-between px-3 py-2"><div><span class="num">555</span><span class="text-xs ml-2" style="color:var(--muted)">3 ตัวบน</span></div><span class="text-sm" style="color:var(--muted)">฿300</span></div>
+        </div>
+      </div>
+
+      <!-- งวดออกผลแล้ว: ไม่ถูก -->
+      <div class="mb-2">
+        <div class="flex items-center justify-between mb-2">
+          <div><p class="font-semibold">หวยลาว · 28 พ.ค. 2568</p><p class="text-xs" style="color:var(--muted)">ผลออก: 3บน <span class="num">901</span> · 2ล่าง <span class="num">43</span></p></div>
+          <span class="badge b-lose"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg>ไม่ถูก</span>
+        </div>
+        <div class="card p-3 space-y-2">
+          <div class="row-lose rounded-lg flex items-center justify-between px-3 py-2"><div><span class="num">12</span><span class="text-xs ml-2" style="color:var(--muted)">2 ตัวบน</span></div><span class="text-sm" style="color:var(--muted)">฿500</span></div>
+          <div class="row-lose rounded-lg flex items-center justify-between px-3 py-2"><div><span class="num">77</span><span class="text-xs ml-2" style="color:var(--muted)">2 ตัวล่าง</span></div><span class="text-sm" style="color:var(--muted)">฿500</span></div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+<script>
+  const params=new URLSearchParams(location.search);
+  if(params.get('c')) document.getElementById('custName').textContent=params.get('c');
+  function toggleTheme(){const h=document.documentElement;const n=h.getAttribute('data-theme')==='dark'?'light':'dark';h.setAttribute('data-theme',n);document.getElementById('iconMoon').style.display=n==='dark'?'none':'block';document.getElementById('iconSun').style.display=n==='dark'?'block':'none';}
+</script>
+</body>
+</html>
