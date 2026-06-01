@@ -247,6 +247,11 @@
               <span class="pill text-xs px-2 py-0.5">วิ่ง ×3</span>
               <span class="badge-warn text-xs px-2 py-0.5 font-semibold">อั้น 3 เลข</span>
             </div>
+            <div class="flex gap-2 mb-3 px-3 py-2.5 rounded-xl" style="background:var(--wait-bg);border:1px solid var(--wait-border)">
+              <div class="flex-1 text-center"><p class="text-xs mb-0.5" style="color:var(--muted)">3 ตัวบน</p><p class="font-bold text-base" style="color:var(--wait-text);letter-spacing:.1em">—</p></div>
+              <div class="flex-1 text-center" style="border-left:1px solid var(--wait-border)"><p class="text-xs mb-0.5" style="color:var(--muted)">2 ตัวบน</p><p class="font-bold text-base" style="color:var(--wait-text);letter-spacing:.1em">—</p></div>
+              <div class="flex-1 text-center" style="border-left:1px solid var(--wait-border)"><p class="text-xs mb-0.5" style="color:var(--muted)">2 ตัวล่าง</p><p class="font-bold text-base" style="color:var(--wait-text);letter-spacing:.1em">—</p></div>
+            </div>
             <div class="flex gap-2">
               <button onclick="openResult(false)" class="btn-result flex-1 py-2.5 text-sm flex items-center justify-center gap-1.5">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
@@ -358,7 +363,23 @@
 
       <!-- ===== VIEW 4: ออกผลรางวัล ===== -->
       <div class="view" id="view-result">
-        <div class="card p-4 mb-4">
+        <!-- idle state -->
+        <div id="resultIdle" class="card p-6 mb-4 flex flex-col items-center text-center" onclick="openResultForm()" style="cursor:pointer">
+          <div class="w-14 h-14 rounded-full flex items-center justify-center mb-4" style="background:var(--surface-2)">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--primary-text)" stroke-width="2">
+              <path d="M6 9H3.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h2.5a2.5 2.5 0 0 0 0-5H18"/>
+              <path d="M4 22h16"/>
+              <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
+              <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
+              <path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/>
+            </svg>
+          </div>
+          <p class="font-semibold mb-1">ออกผลรางวัล</p>
+          <p class="text-xs" style="color:var(--muted)">แตะเพื่อเริ่มกรอกผลที่ออก</p>
+        </div>
+
+        <!-- form (ซ่อนไว้ก่อน) -->
+        <div id="resultForm" class="card p-4 mb-4" style="display:none">
           <p class="text-sm font-semibold mb-1">กรอกผลที่ออก</p>
           <p class="text-xs mb-4" style="color:var(--muted)">ใส่เลขที่ออกแล้วระบบจะตรวจโพยทุกใบอัตโนมัติ</p>
           <div class="space-y-3">
@@ -378,6 +399,7 @@
             </div>
           </div>
           <p class="text-xs mt-3" style="color:var(--muted)">* 3 ตัวโต๊ด/หน้า/ล่าง และวิ่ง ระบบคำนวณจากเลขด้านบนให้อัตโนมัติ</p>
+          <button onclick="confirmResult()" class="btn-primary w-full py-3.5 mt-4" id="btnConfirm" style="display:none">ยืนยันออกผล · ล็อกงวด</button>
         </div>
 
         <!-- สรุปผลตรวจ (โชว์เมื่อกรอกครบ) -->
@@ -401,7 +423,6 @@
             </div>
           </div>
         </div>
-        <button onclick="confirmResult()" class="btn-primary w-full py-3.5" id="btnConfirm" disabled>ยืนยันออกผล · ล็อกงวด</button>
       </div>
 
     </div>
@@ -526,11 +547,12 @@
     showView('view-result');
     const btn = document.getElementById('btnConfirm');
     if(isUpdate){
-      btn.textContent='บันทึกการแก้ไข';
-      // pre-fill เลขที่ออกแล้ว
+      btn.textContent='อัพเดตผลรางวัล';
       document.getElementById('p3').value='274';
       document.getElementById('p2u').value='74';
       document.getElementById('p2d').value='19';
+      document.getElementById('resultIdle').style.display='none';
+      document.getElementById('resultForm').style.display='block';
       onPrize();
     } else {
       btn.textContent='ยืนยันออกผล · ล็อกงวด';
@@ -538,20 +560,29 @@
       document.getElementById('p2u').value='';
       document.getElementById('p2d').value='';
       document.getElementById('resultSummary').style.display='none';
-      btn.disabled=true;
+      btn.style.display='none';
+      document.getElementById('resultIdle').style.display='flex';
+      document.getElementById('resultForm').style.display='none';
     }
+  }
+  function openResultForm(){
+    document.getElementById('resultIdle').style.display='none';
+    document.getElementById('resultForm').style.display='block';
   }
   function onPrize(){
     const p3=document.getElementById('p3').value;
     const p2u=document.getElementById('p2u').value;
     const p2d=document.getElementById('p2d').value;
-    // ตรวจครบเงื่อนไขขั้นต่ำ: มี 3 ตัวบน หรือ 2 ตัวบน+ล่าง
     const ready = p3.length===3 || (p2u.length===2 && p2d.length===2);
     document.getElementById('resultSummary').style.display = ready ? 'block':'none';
-    document.getElementById('btnConfirm').disabled = !ready;
+    document.getElementById('btnConfirm').style.display = ready ? 'block':'none';
   }
   function confirmResult(){
-    // จริง: บันทึกผล + ล็อกงวด + ส่งแจ้งเตือน
+    const btn = document.getElementById('btnConfirm');
+    if(btn.textContent === 'อัพเดตผลรางวัล'){
+      btn.textContent = 'บันทึกการแก้ไข';
+      return;
+    }
     goBack();
   }
   function goBack(){stack.pop();showView(stack[stack.length-1]);}
